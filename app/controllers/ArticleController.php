@@ -67,6 +67,20 @@ class ArticleController extends BaseController
         }
     }
     
+    public function postUpdate($slug)
+    {
+        $article = $this->model->getBySlug($slug);
+        
+        if ($article != false) {
+                        
+            $this->model->update($article, $_POST);
+            
+        } else {
+            
+            $this->abort();
+        }
+    }
+    
     
     protected function parseItems(&$item, $key)
     {

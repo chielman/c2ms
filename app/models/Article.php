@@ -63,4 +63,26 @@ class Article extends BaseModel
         
         return $stmt->fetch();        
     }
+    
+    public function update($original, $params)
+    {
+        $sql = 'UPDATE articles AS a
+                JOIN items AS i ON a.id = i.item_id AND i.module = :module
+                SET     i.slug = :slug,
+                        i.title = :title,
+                        a.content = :content,
+                        a.comment = :comment
+                WHERE i.id = :id';
+        
+        $stmt = $this->db->prepare($sql);
+        // predefined
+        $stmt->bindValue(':module', get_class(), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $original['id'], PDO::PARAM_INT);
+        // user input
+        $stmt->bindValue(':slug', $params['slug'], PDO::PARAM_STR);
+        $stmt->bindValue(':title', $params['title'], PDO::PARAM_STR);
+        $stmt->bindValue(':content', $params['content'], PDO::PARAM_STR);
+        $stmt->bindValue(':comment', $params['comment'], PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

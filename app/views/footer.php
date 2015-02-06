@@ -1,8 +1,7 @@
-<?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+<script src="<?php echo BASE_URL; ?>js/framework.js"></script>
+<script src="<?php echo BASE_URL; ?>js/editor.js"></script>
+<script>
+    $.editor.setStore('<?php echo BASE_URL . CURRENT_URL; ?>/update');
+    $.editor.use('title', 'article h1', 'single-line');
+    $.editor.use('content', 'article div[itemprop="articleBody"]', 'html');
+</script>
