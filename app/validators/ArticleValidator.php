@@ -6,7 +6,7 @@ class ArticleValidator extends BaseValidator
 {
     protected $rules = [
         'title'     => ['mode' => 'plain-single'],
-        'slug'      => ['mode' => 'regex', 'options' => 'a-z0-9-'],
+        'slug'      => ['mode' => 'slug'],
         'content'   => ['mode' => 'html'],
         'comment'   => ['mode' => 'boolean']
     ];

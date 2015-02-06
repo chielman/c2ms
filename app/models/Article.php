@@ -1,6 +1,7 @@
 <?php
 namespace Models;
 use PDO;
+use Validators\ArticleValidator;
 
 class Article extends BaseModel
 {    
@@ -74,15 +75,19 @@ class Article extends BaseModel
                         a.comment = :comment
                 WHERE i.id = :id';
         
+        $validator = new ArticleValidator();
+        $params = $validator->validate($params);
+        $original = array_merge($original, $params);
+        
         $stmt = $this->db->prepare($sql);
         // predefined
         $stmt->bindValue(':module', get_class(), PDO::PARAM_STR);
         $stmt->bindValue(':id', $original['id'], PDO::PARAM_INT);
         // user input
-        $stmt->bindValue(':slug', $params['slug'], PDO::PARAM_STR);
-        $stmt->bindValue(':title', $params['title'], PDO::PARAM_STR);
-        $stmt->bindValue(':content', $params['content'], PDO::PARAM_STR);
-        $stmt->bindValue(':comment', $params['comment'], PDO::PARAM_INT);
+        $stmt->bindValue(':slug', $original['slug'], PDO::PARAM_STR);
+        $stmt->bindValue(':title', $original['title'], PDO::PARAM_STR);
+        $stmt->bindValue(':content', $original['content'], PDO::PARAM_STR);
+        $stmt->bindValue(':comment', $original['comment'], PDO::PARAM_INT);
         $stmt->execute();
     }
 }

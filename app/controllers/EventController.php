@@ -52,6 +52,20 @@ class EventController extends BaseController
         }
     }
     
+    public function postUpdate($slug)
+    {
+        $event = $this->model->getBySlug($slug);
+        
+        if ($event != false) {
+            
+            $this->model->update($event, $_POST);
+
+        } else {
+            // event not found
+            $this->abort();
+        }
+    }
+    
     public function postAttendance($slug)
     {        
         $event = $this->model->getBySlug($slug);

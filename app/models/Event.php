@@ -2,6 +2,7 @@
 
 namespace Models;
 use PDO;
+use Validators\EventValidator;
 
 class Event extends BaseModel
 {
@@ -79,6 +80,42 @@ class Event extends BaseModel
         $stmt->execute();
         
         return $stmt->fetch();
+    }
+    
+    public function update($original, $params)
+    {
+        $sql = 'UPDATE events AS e
+                JOIN items AS i ON a.id = i.item_id AND i.module = :module
+                SET     i.slug = :slug,
+                        i.title = :title,
+                        e.description = :description,
+                        e.start = :start,
+                        e.end = :end,
+                        e.fullday = :fullday,
+                        e.attendance = :attendance,
+                        e.attend_end = :attend_end,
+                        e.comment = :comment
+                WHERE i.id = :id';
+        
+        $validator = new EventValidator();
+        $params = $validator->validate($params);
+        $original = array_merge($original, $params);
+        
+        $stmt = $this->db->prepare($sql);
+        // predefined
+        $stmt->bindValue(':module', get_class(), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $original['id'], PDO::PARAM_INT);
+        // user input
+        $stmt->bindValue(':slug', $original['slug'], PDO::PARAM_STR);
+        $stmt->bindValue(':title', $original['title'], PDO::PARAM_STR);
+        $stmt->bindValue(':description', $original['description'], PDO::PARAM_STR);
+        $stmt->bindValue(':start', $original['start'], PDO::PARAM_STR);
+        $stmt->bindValue(':end', $original['end'], PDO::PARAM_STR);
+        $stmt->bindValue(':fullday', $original['fullday'], PDO::PARAM_INT);
+        $stmt->bindValue(':attendance', $original['attendance'], PDO::PARAM_INT);
+        $stmt->bindValue(':attend_end', $original['attend_end'], PDO::PARAM_STR);
+        $stmt->bindValue(':comment', $original['comment'], PDO::PARAM_INT);
+        $stmt->execute();
     }
     
     public function attendance($id)

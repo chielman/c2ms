@@ -33,6 +33,15 @@ abstract class BaseValidator
                 $var = $input;
                 break;
             
+            case 'datetime':
+                $var = $input;
+                break;
+            
+            case 'slug':
+                $var = filter_var($input, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => 'a-z0-9-']]);
+                if ($var === false) { throw new ValidationException($key, $input); }
+                break;
+            
             case 'regex':
                 $var = filter_var($input, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $rule['options']]]);
                 if ($var === false) { throw new ValidationException($key, $input); }
