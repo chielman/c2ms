@@ -24,14 +24,16 @@ function image($path, $width = false, $height = false)
 
 function format_date($format, $date)
 {
-    $time = new DateTime($date, UTC_TIME);
-    $time->setTimezone(LOCAL_TIME);
+    $local = new DateTimeZone(LOCAL_TIMEZONE);
+    $time = new DateTime($date, new DateTimeZone('UTC'));
+    $time->setTimezone($local);
     return $time->format($format);
 }
 
 function to_sql_date($date)
 {
-    $time = new DateTime($date, LOCAL_TIME);
-    $time->setTimezone(UTC_TIME);
+    $local = new DateTimeZone(LOCAL_TIMEZONE);
+    $time = new DateTime($date, $local);
+    $time->setTimezone(new DateTimeZone('UTC'));
     return $time->format('Y-m-d H:i:s');
 }

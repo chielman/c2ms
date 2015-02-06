@@ -16,8 +16,7 @@ Libraries\ClassLoader::register();
 session_start();
 
 // set time zones
-define('UTC_TIME', new DateTimeZone('UTC'));
-define('LOCAL_TIME', new DateTimeZone('Europe/Amsterdam'));
+define('LOCAL_TIMEZONE', 'Europe/Amsterdam');
 
 include(APP_PATH . '/helpers.php');
 
