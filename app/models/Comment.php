@@ -50,7 +50,10 @@ class Comment extends BaseModel
     
     public function getFor($item_id)
     {
-        $sql = 'SELECT * FROM comments WHERE item_id = :item_id';
+        $sql = 'SELECT u.name, u.image, c.comment, c.created
+                FROM comments AS c
+                JOIN users AS u ON u.id = c.user_id
+                WHERE c.item_id = :item_id';
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':item_id', $item_id, PDO::PARAM_INT);
