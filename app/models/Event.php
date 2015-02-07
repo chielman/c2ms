@@ -7,11 +7,12 @@ use Validators\EventValidator;
 class Event extends BaseModel
 {
     
-    public function all()
+    public function all($topic = false)
     {
         $sql = 'SELECT  i.id,
                         i.slug,
                         i.title,
+                        i.module,
                         e.description,
                         e.start,
                         e.end,
@@ -19,16 +20,20 @@ class Event extends BaseModel
                         e.attendance,
                         e.attend_end,
                         e.comment,
-                        t.slug AS cat_slug,
-                        t.title AS cat_title
+                        "event" AS _type
                 FROM events AS e
-                JOIN items AS i ON e.id = i.item_id AND i.module = :model
-                JOIN item_topics AS it ON it.item_id = i.id
-                JOIN topics AS t ON t.id = it.topic_id
-                WHERE t.category = 1';
+                JOIN items AS i ON e.id = i.item_id AND i.module = :model';
+        
+        if ($topic !== false) {
+            $sql .= ' JOIN item_topics AS it ON it.item_id = i.id WHERE it.topic_id = :topic_id';
+        }
         
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':model', get_class(), PDO::PARAM_STR);
+        $stmt->bindValue(':model', get_class(), PDO::PARAM_STR);      
+        
+        if ($topic !== false) {
+            $stmt->bindValue(':topic_id', $topic, PDO::PARAM_INT);
+        }
         $stmt->execute();
         
         return $stmt->fetchAll();        
@@ -45,7 +50,8 @@ class Event extends BaseModel
                         e.fullday,
                         e.attendance,
                         e.attend_end,
-                        e.comment
+                        e.comment,
+                        "event" AS _type
                 FROM events AS e
                 JOIN items AS i ON e.id = iitem_id AND i.module = :model
                 WHERE id = :id';
@@ -69,7 +75,8 @@ class Event extends BaseModel
                         e.fullday,
                         e.attendance,
                         e.attend_end,
-                        e.comment
+                        e.comment,
+                        "event" AS _type
                 FROM events AS e
                 JOIN items AS i ON e.id = i.item_id AND i.module = :model
                 WHERE i.slug = :slug';

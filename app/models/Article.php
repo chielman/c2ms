@@ -5,23 +5,29 @@ use Validators\ArticleValidator;
 
 class Article extends BaseModel
 {    
-    public function all()
+    public function all($topic = false)
     {
         $sql = 'SELECT  i.id,
                         i.slug,
                         i.title,
+                        i.module,
                         a.content,
                         a.comment,
-                        t.slug AS cat_slug,
-                        t.title AS cat_title
+                        "article" AS _type
                 FROM articles AS a
-                JOIN items AS i ON a.id = i.item_id AND i.module = :model
-                JOIN item_topics AS it ON it.item_id = i.id
-                JOIN topics AS t ON t.id = it.topic_id
-                WHERE t.category = 1';
+                JOIN items AS i ON a.id = i.item_id AND i.module = :model';
+        
+        if ($topic !== false) {
+            $sql .= ' JOIN item_topics AS it ON it.item_id = i.id WHERE it.topic_id = :topic_id';
+        }
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':model', get_class(), PDO::PARAM_STR);
+        
+        if ($topic !== false) {
+            $stmt->bindValue(':topic_id', $topic, PDO::PARAM_INT);
+        }
+        
         $stmt->execute();
         
         return $stmt->fetchAll();        
@@ -33,7 +39,8 @@ class Article extends BaseModel
                         i.slug,
                         i.title,
                         a.content,
-                        a.comment 
+                        a.comment,
+                        "article" AS _type
                 FROM articles
                 JOIN items ON articles.id = items.item_id AND items.module = :model
                 WHERE articles.id = :id';
@@ -52,7 +59,8 @@ class Article extends BaseModel
                         i.slug,
                         i.title,
                         a.content,
-                        a.comment
+                        a.comment,
+                        "article" AS _type
                 FROM articles AS a
                 JOIN items AS i ON a.id = i.item_id AND i.module = :model
                 WHERE i.slug = :slug';

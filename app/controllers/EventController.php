@@ -21,8 +21,6 @@ class EventController extends BaseController
                 
         if ($events != false) {
             
-            array_walk($events, [$this, 'parseItems'] );
-
             $this->layout('event/list-events', ['events' => $events]);
         } else {
             // events are not found
@@ -83,11 +81,5 @@ class EventController extends BaseController
             // event not found
             $this->abort();
         }
-    }
-    
-    
-    protected function parseItems(&$item, $key)
-    {
-        $item['url'] = url( $item['cat_slug'] . '/' . $item['slug']);
     }
 }
