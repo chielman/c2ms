@@ -3,7 +3,7 @@
 <ul>
 <?php foreach($events as $i => $event): ?>
     <li>
-        <a href="<?php echo $event['url']; ?>"><?php echo $event['title']; ?></a>
+        <a href="<?php echo url($event['slug'], true); ?>"><?php echo $event['title']; ?></a>
         <?php if ($event['fullday'] == 0): ?>
             <?php echo format_date('G:i', $event['start']); ?> - <?php echo format_date('G:i', $event['end']); ?>
         <?php endif; ?>

@@ -1,0 +1,1 @@
+<a href="<?php echo url($slug, true); ?>"><?php echo $title; ?></a>

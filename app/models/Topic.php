@@ -47,19 +47,6 @@ class Topic extends BaseModel
         return $model->get($id);
     }
     
-    public function getItems($topic_id)
-    {
-        $sql = 'SELECT * FROM item_topics 
-                JOIN items ON item_topics.item_id = items.id
-                WHERE topic_id = :topic_id';
-        
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':topic_id', $topic_id, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->fetchAll();
-    }
-    
     public function getBySlug($slug)
     {
         $sql = 'SELECT * FROM topics WHERE slug = :slug';
@@ -73,7 +60,8 @@ class Topic extends BaseModel
     
     public function getItemFrom($topic_id, $item_slug)
     {
-        $sql = 'SELECT items.module, items.item_id 
+        $sql = 'SELECT  items.module, 
+                        items.item_id 
                 FROM items
                 JOIN item_topics ON item_topics.topic_id = :topic_id AND item_topics.item_id = items.id
                 WHERE items.slug = :slug';
@@ -84,5 +72,39 @@ class Topic extends BaseModel
         $stmt->execute();
         
         return $stmt->fetch(); 
+    }
+    
+    public function getItems($topic = false)
+    {
+        $elements = [];
+        
+        $articles = new Article();
+        $tItems = $articles->all($topic);
+        if ($tItems != false) {
+            array_walk($tItems, function(&$item){
+                $item['module'] = 'article';
+            });
+            $elements = array_merge($elements, $tItems);
+        }
+        
+        $events = new Event();
+        $tItems = $events->all($topic);
+        if ($tItems != false) {
+            array_walk($tItems, function(&$item){
+                $item['module'] = 'event';
+            });
+            $elements = array_merge($elements, $tItems);
+        }
+        
+        $comments = new Comment();
+        $tItems = $comments->all($topic);
+        if ($tItems != false) {
+            array_walk($tItems, function(&$item){
+                $item['module'] = 'comment';
+            });
+            $elements = array_merge($elements, $tItems);
+        }
+
+        return $elements;
     }
 }

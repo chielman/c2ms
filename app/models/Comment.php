@@ -5,6 +5,36 @@ use PDO;
 
 class Comment extends BaseModel
 {
+    public function all($topic = false)
+    {        
+        $sql = 'SELECT  i.id,
+                        i.slug, 
+                        i.title, 
+                        c.comment, 
+                        c.created, 
+                        u.name, 
+                        u.image,
+                        "comment" AS _type
+                FROM comments AS c
+                JOIN items AS i ON i.id = c.item_id
+                JOIN users AS u ON u.id = c.user_id';
+        
+        if ($topic !== false) {
+            $sql .= ' JOIN item_topics AS it ON it.item_id = i.id
+                      WHERE it.topic_id = :topic_id';
+        }
+        
+        $stmt = $this->db->prepare($sql);
+        
+        if ($topic !== false) {
+            $stmt->bindValue(':topic_id', $topic, PDO::PARAM_INT);
+        }
+        
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
+    
     public function getItemBySlug($slug)
     {
         $sql = 'SELECT id FROM items WHERE slug = :slug';
@@ -50,7 +80,11 @@ class Comment extends BaseModel
     
     public function getFor($item_id)
     {
-        $sql = 'SELECT u.name, u.image, c.comment, c.created
+        $sql = 'SELECT  u.name, 
+                        u.image, 
+                        c.comment, 
+                        c.created,
+                        "comment" AS _type
                 FROM comments AS c
                 JOIN users AS u ON u.id = c.user_id
                 WHERE c.item_id = :item_id';

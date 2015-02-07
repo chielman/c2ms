@@ -44,18 +44,14 @@ function format_date($format, $date)
         $now    = $now->format('U');
         $time   = $now - $date->format('U');
         
-        if ($time < 60) { return ''; }
-        $time = $time / 60; // to minutes
-        if ($time < 60) { return round($time) . ' min'; }
-        $time = $time / 60; // to hours
-        if ($time < 24) { return round($time) . ' uur'; }
-        $time = $time / 24; // to days
-        if ($time < 2) { return 'gisteren'; }
-        if ($time < 7) { return round($time) . ' dagen'; }
-        if ($time < 30) { return round($time / 7) . ' weken'; }
-        $time = $time / 30;
-        if ($time < 12) { return round($time) . ' maanden'; }
-        return round($time / 12) . ' jaar';
+        if ($time < 60) { return 'net'; }
+        if ($time < 3600) { return round($time) . ' min'; }
+        if ($time < 86400) { return round($time) . ' uur'; }
+        if ($time < 172800) { return 'gisteren om '; }
+        if ($time < 604800) { return round($time) . ' dagen'; }
+        if ($time < 2592000) { return round($time / 7) . ' weken'; }
+        if ($time < 31536000) { return round($time) . ' maanden'; }
+        return round($time / 31536000) . ' jaar';
         
     } else {
         return $date->format($format);
