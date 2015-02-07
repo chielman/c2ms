@@ -1,0 +1,42 @@
+@import 'reset';
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+
+body{
+    background-color:#999;
+    font-family: 'Droid Sans', arial, sans-serif;
+}
+
+#header{
+    background-color: #F79239;
+    width: 100%;
+    height: 44px;
+    border-bottom: 1px solid darken(#F79239, 15%);
+    .navicon{
+        background-color: #fff;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+#menu{
+    background-color: #252525;
+    height: 100%;
+    width: 250px;
+    border-right: 1px solid #222;
+    ul{
+        li{
+            background-color: #2f2f2f;
+            border-bottom: 1px solid #555;
+            padding: .75em;
+            border-top: 1px solid #3a3a3a;
+            border-bottom: 1px solid #292929;
+            a{
+                color: #e6e6e6;
+            }
+            &:hover{
+                background-color: #353535;
+            }
+        }
+    }
+}
+
