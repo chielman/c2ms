@@ -1,8 +1,14 @@
-html, body, h1, h2, h3, h4, h5, p, ul, li, ol, a{
+html, body, h1, h2, h3, h4, h5, p, ul, li, ol, a, form{
     padding: 0;
     margin: 0;
     color: #000;
     font-size: 16px;
+}
+
+body,
+input,
+button{
+    font-family: 'Droid Sans', arial, sans-serif;
 }
 
 li {
