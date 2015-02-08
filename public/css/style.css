@@ -5,6 +5,9 @@ html, body, h1, h2, h3, h4, h5, p, ul, li, ol, a {
   color: #000;
   font-size: 16px; }
 
+li {
+  list-style: none; }
+
 a {
   text-decoration: none; }
 
@@ -17,25 +20,46 @@ body {
   height: 44px;
   border-bottom: 1px solid #db6b09; }
   #header .navicon {
-    background-color: #fff;
-    width: 25px;
-    height: 25px; }
+    width: 51px;
+    height: 44px;
+    display: inline-block;
+    background-image: url("../images/navicon.png");
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+    #header .navicon:hover {
+      background-color: #f3770a; }
+  #header .header-title {
+    display: inline-block;
+    color: #fff;
+    vertical-align: top;
+    line-height: 45px;
+    margin-left: .3em;
+    font-size: 135%; }
 
 #menu {
   position: absolute;
   background-color: #252525;
   height: 100%;
+  height: calc(100% - 45px);
   width: 250px;
-  border-right: 1px solid #222; }
+  max-width: 250px;
+  border-right: 1px solid #222;
+  transition: max-width 500ms ease; }
   #menu ul li {
     background-color: #2f2f2f;
     border-bottom: 1px solid #555;
     padding: .75em;
     border-top: 1px solid #3a3a3a;
-    border-bottom: 1px solid #292929; }
+    border-bottom: 1px solid #292929;
+    overflow: hidden; }
     #menu ul li a {
       color: #e6e6e6; }
     #menu ul li:hover {
       background-color: #353535; }
+  #menu.hidden {
+    overflow: hidden;
+    max-width: 0; }
 
 /*# sourceMappingURL=style.css.map */
