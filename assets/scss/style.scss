@@ -1,15 +1,19 @@
 @import 'reset';
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
 
+//variables
+$orange: #F79239;
+
+
 body{
     font-family: 'Droid Sans', arial, sans-serif;
 }
 
 #header{
-    background-color: #F79239;
+    background-color: $orange;
     width: 100%;
     height: 44px;
-    border-bottom: 1px solid darken(#F79239, 15%);
+    border-bottom: 1px solid darken($orange, 15%);
     .navicon{
         width: 51px;
         height: 44px;
@@ -20,7 +24,7 @@ body{
             -ms-user-select: none;
                 user-select: none;
         &:hover{
-            background-color: darken(#F79239, 10%);
+            background-color: darken($orange, 10%);
         }
     }
     .header-title{
@@ -64,4 +68,68 @@ body{
         max-width: 0;
     }
 }
+
+#background-picture{
+    background-size: cover;
+    background-position: center center;
+    height: 100%;
+    height: calc(100% - 45px);
+    .center-box{
+        background-color: #fff;
+        background-color: rgba(255,255,255,.5);
+        width: 300px;
+        min-height: 300px;
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        margin-left: -200px;
+        top: 50%;
+        margin-top: -200px;
+        padding: 25px;
+    }
+    .login{
+        padding-top: 180px;
+        background-image: url("../images/logo-100x85.png");
+        background: rgba(255,255,255,.5) url("../images/logo-100x85.png") no-repeat center 50px;
+        form{
+            .input-field{
+                position: relative;
+                label{
+                    padding-left: 8px;
+                    line-height: 33px;
+                    position: absolute;
+                    z-index: 2;
+                }
+                input{
+                    padding: 8px 20px 8px 38px;
+                    display: block;
+                    border: 1px solid #999;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    border-radius: 6px;
+                    box-shadow: inset 0 1px 2px silver;
+                }
+            }
+            button{
+                background-color: #005A9C;
+                border-style: none;
+                font-weight:bold;
+                color: #fff;
+                padding: 8px 14px 8px 14px;
+                border-radius: 4px;
+                text-transform: uppercase;
+                margin: 10px 0;
+                
+                width: 100%;
+                font-size: 110%;
+                padding: 12px;
+                &:hover{
+                    background-color: $orange;
+                }
+            }
+        }
+    }
+}
+
+
 
