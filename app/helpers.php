@@ -45,12 +45,12 @@ function format_date($format, $date)
         $time   = $now - $date->format('U');
         
         if ($time < 60) { return 'net'; }
-        if ($time < 3600) { return round($time) . ' min'; }
-        if ($time < 86400) { return round($time) . ' uur'; }
+        if ($time < 3600) { return round($time / 60) . ' min'; }
+        if ($time < 86400) { return round($time / 3600) . ' uur'; }
         if ($time < 172800) { return 'gisteren om '; }
-        if ($time < 604800) { return round($time) . ' dagen'; }
-        if ($time < 2592000) { return round($time / 7) . ' weken'; }
-        if ($time < 31536000) { return round($time) . ' maanden'; }
+        if ($time < 604800) { return round($time / 86400) . ' dagen'; }
+        if ($time < 2592000) { return round($time / 604800) . ' weken'; }
+        if ($time < 31536000) { return round($time / 2592000) . ' maanden'; }
         return round($time / 31536000) . ' jaar';
         
     } else {
