@@ -24,9 +24,8 @@ class ArticleController extends BaseController
 
         if ($articles != false) {
             
-            array_walk($articles, [$this, 'parseItems'] );
-
-            $this->layout('article/list-articles', ['articles' => $articles]);
+            $this->layout('topic/single-topic', ['title' => 'Articles', 'items' => $articles]);
+            
         } else {
             
             $this->abort();
@@ -50,7 +49,7 @@ class ArticleController extends BaseController
      */
     public function getShow($slug)
     {              
-        $article = $this->model->getBySlug($slug);
+        $article = $this->model->get($slug);
         
         if ($article != false ) {
             
@@ -69,7 +68,7 @@ class ArticleController extends BaseController
     
     public function postUpdate($slug)
     {
-        $article = $this->model->getBySlug($slug);
+        $article = $this->model->get($slug);
         
         if ($article != false) {
                         
@@ -79,11 +78,5 @@ class ArticleController extends BaseController
             
             $this->abort();
         }
-    }
-    
-    
-    protected function parseItems(&$item, $key)
-    {
-        $item['url'] = url( $item['cat_slug'] . '/' . $item['slug']);
     }
 }

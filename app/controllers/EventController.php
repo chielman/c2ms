@@ -21,7 +21,7 @@ class EventController extends BaseController
                 
         if ($events != false) {
             
-            $this->layout('event/list-events', ['events' => $events]);
+            $this->layout('topic/single-topic', ['title' => 'Events', 'items' => $events]);
         } else {
             // events are not found
             $this->abort();
@@ -30,7 +30,7 @@ class EventController extends BaseController
     
     public function getShow($slug)
     {        
-        $event = $this->model->getBySlug($slug);
+        $event = $this->model->get($slug);
 
         if ($event != false) {
             
@@ -52,7 +52,7 @@ class EventController extends BaseController
     
     public function postUpdate($slug)
     {
-        $event = $this->model->getBySlug($slug);
+        $event = $this->model->get($slug);
         
         if ($event != false) {
             
@@ -66,7 +66,7 @@ class EventController extends BaseController
     
     public function postAttendance($slug)
     {        
-        $event = $this->model->getBySlug($slug);
+        $event = $this->model->get($slug);
         
         if ($event != false) {
             

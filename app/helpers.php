@@ -32,7 +32,7 @@ function image($path, $width = false, $height = false)
         
     } else {
         
-        return BASE_URL . 'images/' .  $path;
+        return path_to_url( $path );
     }
 }
 

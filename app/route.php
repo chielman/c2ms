@@ -16,18 +16,20 @@ $router->add('articles/add', ['Controllers\ArticleController', 'getForm']);
 $router->add('articles', ['Controllers\ArticleController', 'getIndex']);
 
 // event
-$router->add('events', ['Controllers\EventController', 'getIndex']);
 $router->add('events/add', ['Controllers\EventController', 'getForm']);
+$router->add('events/*', ['Controllers\EventController', 'getShow']);
+$router->add('events', ['Controllers\EventController', 'getIndex']);
+
 // user
 $router->add('me', ['Controllers\UserController', 'getMe']);
 $router->add('users', ['Controllers\UserController', 'getIndex']);
 $router->add('users/*', ['Controllers\UserController', 'getShow']);
 
 // topics
-$router->add('topics', ['Controllers\TopicController', 'getIndex']);
 $router->add('topics/add', ['Controllers\TopicController', 'getForm']);
 $router->add('topics/*/update', ['Controllers\TopicController', 'postUpdate']);
 $router->add('topics/*/delete', ['Controllers\TopicController', 'getDelete']);
+$router->add('topics', ['Controllers\TopicController', 'getIndex']);
 
 $router->add('*/*', ['Controllers\TopicController', 'route'], function($route){
 

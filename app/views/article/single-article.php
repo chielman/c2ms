@@ -1,5 +1,6 @@
 <article itemscope itemtype="http://schema.org/Article">
     <header>
+        <img src="<?php echo image($media, 640, 480); ?>" alt="<?php echo $media_description; ?>"/>
         <h1 itemprop="name"><?php echo $title; ?></h1>
     </header>
     

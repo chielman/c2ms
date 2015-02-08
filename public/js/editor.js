@@ -37,10 +37,21 @@ $.editor = (function(){
                     document.execCommand('formatBlock', false, 'p');
                 }
                 // ctrl keys (style
-                if (e.ctrlKey || e.metaKey) { e.preventDefault(); return; }
+                if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault(); return; 
+                }
 
                 changed = true;
             });
+            
+            object.addEventListener('paste', function(e){
+                
+                e.preventDefault();
+                
+                var text = e.clipboardData.getData('text/plain');
+                
+                document.execCommand('insertText', false, text);
+            })
 
             object.addEventListener('blur', function(e){
                 if (changed) {

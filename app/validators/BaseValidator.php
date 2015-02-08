@@ -23,6 +23,8 @@ abstract class BaseValidator
     
     protected function validateSingle($key, $input, $rule)
     {
+        $input = trim($input);
+        
         switch ($rule['mode']) {
             
             case 'plain-single':

@@ -1,6 +1,6 @@
 <div role="navigation" id="menu">
     <ul>
-        <li><a href="<?php echo url(); ?>">Tijdlijn</a></li>
+        <li><a href="<?php echo url(); ?>">Home</a></li>
         <li><a href="<?php echo url('nieuws'); ?>">Nieuws</a></li>
         <li><a href="<?php echo url('events'); ?>">Kalender</a></li>
 

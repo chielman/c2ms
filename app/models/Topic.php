@@ -80,28 +80,20 @@ class Topic extends BaseModel
         
         $articles = new Article();
         $tItems = $articles->all($topic);
+
         if ($tItems != false) {
-            array_walk($tItems, function(&$item){
-                $item['module'] = 'article';
-            });
             $elements = array_merge($elements, $tItems);
         }
         
         $events = new Event();
         $tItems = $events->all($topic);
         if ($tItems != false) {
-            array_walk($tItems, function(&$item){
-                $item['module'] = 'event';
-            });
             $elements = array_merge($elements, $tItems);
         }
         
         $comments = new Comment();
         $tItems = $comments->all($topic);
         if ($tItems != false) {
-            array_walk($tItems, function(&$item){
-                $item['module'] = 'comment';
-            });
             $elements = array_merge($elements, $tItems);
         }
 

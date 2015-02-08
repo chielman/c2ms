@@ -20,9 +20,13 @@ class Event extends BaseModel
                         e.attendance,
                         e.attend_end,
                         e.comment,
+                        c.slug AS cat_slug,
+                        c.title AS category,
                         "event" AS _type
                 FROM events AS e
-                JOIN items AS i ON e.id = i.item_id AND i.module = :model';
+                JOIN items AS i ON e.id = i.item_id AND i.module = :model
+                JOIN item_topics AS itc ON itc.item_id = i.id
+                JOIN topics AS c ON c.id = itc.topic_id AND c.category = 1';
         
         if ($topic !== false) {
             $sql .= ' JOIN item_topics AS it ON it.item_id = i.id WHERE it.topic_id = :topic_id';
@@ -51,38 +55,29 @@ class Event extends BaseModel
                         e.attendance,
                         e.attend_end,
                         e.comment,
-                        "event" AS _type
-                FROM events AS e
-                JOIN items AS i ON e.id = iitem_id AND i.module = :model
-                WHERE id = :id';
-        
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':model', get_class(), PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->fetch();
-    }
-    
-    public function getBySlug($slug)
-    {
-        $sql = 'SELECT  i.id,
-                        i.slug,
-                        i.title,
-                        e.description,
-                        e.start,
-                        e.end,
-                        e.fullday,
-                        e.attendance,
-                        e.attend_end,
-                        e.comment,
+                        c.slug AS cat_slug,
+                        c.title AS category,
                         "event" AS _type
                 FROM events AS e
                 JOIN items AS i ON e.id = i.item_id AND i.module = :model
-                WHERE i.slug = :slug';
+                JOIN item_topics AS itc ON itc.item_id = i.id
+                JOIN topics AS c ON c.id = itc.topic_id AND c.category = 1';
+        
+        if (is_string($id)) {
+            $sql .= ' WHERE i.slug = :slug';
+        } else {
+            $sql .= ' WHERE i.id = :id';
+        }
         
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':slug', $slug, PDO::PARAM_STR);
+        
+        if (is_string($id)) {
+            $stmt->bindValue(':slug', $id, PDO::PARAM_STR);
+        } else {
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        }
+        
+        
         $stmt->bindValue(':model', get_class(), PDO::PARAM_STR);
         $stmt->execute();
         

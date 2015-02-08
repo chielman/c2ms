@@ -9,7 +9,6 @@ a {
   text-decoration: none; }
 
 body {
-  background-color: #999;
   font-family: 'Droid Sans', arial, sans-serif; }
 
 #header {
@@ -23,6 +22,7 @@ body {
     height: 25px; }
 
 #menu {
+  position: absolute;
   background-color: #252525;
   height: 100%;
   width: 250px;
