@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
 -- Dumping data for table c2ms2.articles: ~1 rows (approximately)
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
 INSERT INTO `articles` (`id`, `content`, `comment`) VALUES
-	(1, 'Ik vaar nu zo\'n kleine drie maanden mee en heb het "drakenvirus" zwaar te pakken. Alles eraan vind ik leuk: de manier van trainen; de interactie met teamleden: het lezen van de wolken (zit er wel onweer in of niet) en de fanieke manier van beoefenen. Drakenbootvaren vind je of superleuk of je vindt er niks aan. Ik ben echt verkocht.', 1);
+	(1, '\n        <p>Ik vaar nu zo\'n kleine drie maanden mee en heb het "drakenvirus" zwaar te pakken. Alles eraan vind ik leuk: de manier van trainen; de interactie met teamleden: het lezen van de wolken (zit er wel onweer in of niet) en de fanieke manier van beoefenen. Drakenbootvaren vind je of superleuk of je vindt er niks aan. Ik ben echt verkocht.</p><p>In de aanloop naar het NK werd er behoorlijk pittig getraind en ik kon gelukkig in het tempo mee, maar het was nog niet helemaal zeker of ik wel een heat mocht varen. Het zou mijn allereerste wedstrijd worden en dan direct een NK. Ik heb flink zitten duimen en was heel blij toen ik in de eerste heat aan de slag mocht op de 500 meter. Ik had maar Ã©Ã©n gedachte: Die peddel blijft in het water al moet ik er dood bij neervallen. Ik was enorm gefocust. We plaatsten ons rechtstreeks voor de finale. Het gaf me een enorme kick. Daarna zou ik niet meer aan de peddel komen voor mijn eigen team dus toen ben ik bij Dura Vermeer team ingestapt en heb zowaar nog een paar 200 meters gevaren en een 2 kilometer. Zo heb ik toch nog de nodige wedstrijdmeters gemaakt.</p><p>Uiteindelijk pakte ons team maar liefst drie ereprijzen en mocht ik de medailles ophalen voor de 500 meter. Ik kan je zeggen dat ik behoorlijk trots was op dat moment.</p><p>Wat ik ook heel bijzonder vind is de manier waarop je uit de boot stapt na een gevaren heat: Allemaal oplijnen en een high-5. Er is echt een ontlading op dat moment. Het gezamenlijk afsluiten na de 2 km-race is een feest op zich. Alle boten naast elkaar en maar flink trommelen op die vaten. Wat een sfeertje zeg! Lijkt me ook heel leuk om dat van de kant te aanschouwen, maar ik zit toch tien keer liever in die boot!</p>        ', 1);
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 
 
@@ -49,17 +49,18 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `item_id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `comment` text NOT NULL,
+  `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table c2ms2.comments: ~5 rows (approximately)
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` (`id`, `item_id`, `user_id`, `comment`) VALUES
-	(1, 2, 1, 'test'),
-	(2, 2, 1, 'nog niets'),
-	(3, 1, 1, 'test3'),
-	(4, 1, 1, 'test4'),
-	(5, 1, 1, 'teset4');
+INSERT INTO `comments` (`id`, `item_id`, `user_id`, `comment`, `created`) VALUES
+	(1, 2, 1, 'test', '0000-00-00 00:00:00'),
+	(2, 2, 1, 'nog niets', '0000-00-00 00:00:00'),
+	(3, 1, 1, 'test3', '0000-00-00 00:00:00'),
+	(4, 1, 1, 'test4', '0000-00-00 00:00:00'),
+	(5, 1, 1, 'teset4', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 
 
@@ -88,19 +89,22 @@ INSERT INTO `events` (`id`, `description`, `start`, `end`, `fullday`, `attendanc
 DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `media_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL,
   `slug` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   `module` varchar(50) NOT NULL,
   `item_id` int(10) unsigned NOT NULL,
+  `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table c2ms2.items: ~2 rows (approximately)
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` (`id`, `slug`, `title`, `module`, `item_id`) VALUES
-	(1, 'nk-als-nieuweling', 'NK als nieuweling', 'Models\\Article', 1),
-	(2, 'dragontrek-alkmaar-2015', 'Dragontrek Alkmaar', 'Models\\Event', 1);
+INSERT INTO `items` (`id`, `media_id`, `user_id`, `slug`, `title`, `module`, `item_id`, `created`) VALUES
+	(1, 1, 1, 'nk-als-nieuweling', 'NK als nieuweling', 'Models\\Article', 1, '0000-00-00 00:00:00'),
+	(2, 0, 1, 'dragontrek-alkmaar-2015', 'Dragontrek Alkmaar', 'Models\\Event', 1, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
 
@@ -119,6 +123,24 @@ INSERT INTO `item_topics` (`item_id`, `topic_id`) VALUES
 /*!40000 ALTER TABLE `item_topics` ENABLE KEYS */;
 
 
+-- Dumping structure for table c2ms2.media
+DROP TABLE IF EXISTS `media`;
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('image') NOT NULL,
+  `description` tinytext NOT NULL,
+  `thumbnail` tinytext NOT NULL,
+  `original` tinytext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table c2ms2.media: ~1 rows (approximately)
+/*!40000 ALTER TABLE `media` DISABLE KEYS */;
+INSERT INTO `media` (`id`, `type`, `description`, `thumbnail`, `original`) VALUES
+	(1, 'image', 'vol de wind in tijdens een wintertraining', 'stories\\test\\DSC00108_thumb.jpg', 'stories\\test\\DSC00108.jpg');
+/*!40000 ALTER TABLE `media` ENABLE KEYS */;
+
+
 -- Dumping structure for table c2ms2.permissions
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE IF NOT EXISTS `permissions` (
@@ -128,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   UNIQUE KEY `permission` (`permission`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table c2ms2.permissions: ~17 rows (approximately)
+-- Dumping data for table c2ms2.permissions: ~20 rows (approximately)
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
 INSERT INTO `permissions` (`id`, `permission`) VALUES
 	(7, 'article.comment'),
@@ -152,6 +174,20 @@ INSERT INTO `permissions` (`id`, `permission`) VALUES
 	(17, 'user.edit'),
 	(15, 'user.edit-self');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
+
+
+-- Dumping structure for table c2ms2.revisions
+DROP TABLE IF EXISTS `revisions`;
+CREATE TABLE IF NOT EXISTS `revisions` (
+  `id` int(10) unsigned NOT NULL,
+  `item_id` int(10) unsigned NOT NULL,
+  `data` mediumtext NOT NULL,
+  `timestamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table c2ms2.revisions: ~0 rows (approximately)
+/*!40000 ALTER TABLE `revisions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `revisions` ENABLE KEYS */;
 
 
 -- Dumping structure for table c2ms2.topics
@@ -183,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `usergroups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table c2ms2.usergroups: ~5 rows (approximately)
+-- Dumping data for table c2ms2.usergroups: ~6 rows (approximately)
 /*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
 INSERT INTO `usergroups` (`id`, `name`) VALUES
 	(0, 'guest'),
