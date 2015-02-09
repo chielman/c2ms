@@ -10,10 +10,12 @@ class AuthController extends BaseController
     {
         if (isset($_SESSION['uid'])) {
             // already logged in
+            
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // login attempt
             $this->postLogin();
         } else {
+            
             $this->layout('auth/login');
         }
     }
@@ -33,10 +35,12 @@ class AuthController extends BaseController
             session_regenerate_id(true);
 
             $_SESSION['uid'] = $user['id'];
-            echo 'logged in';
+            
+            header('Location: ' . url() . '?message=LOGIN_SUCCESSFUL' );
+            
         } else {
             // failed to login
-            echo 'failed';
+            header('Location: ' . url() . '?message=LOGIN_FAILED' );
         }
     }
     
@@ -44,6 +48,6 @@ class AuthController extends BaseController
     {
         session_destroy();
         
-        $this->layout('auth/logout');
+        header('Location: ' . url() . '?message=LOGOUT_SUCCESSFUL' );
     }
 }

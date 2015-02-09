@@ -1,4 +1,6 @@
 /nbproject/private/
 /nbproject/
 /public/images/stories/
+!/public/images/stories/.gitkeep
 /public/images/profiles/
+!/public/images/profiles/.gitkeep

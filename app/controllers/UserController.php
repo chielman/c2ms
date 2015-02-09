@@ -15,9 +15,11 @@ class UserController extends BaseController
         $this->model = new User();
     }
     
-    public function index()
+    public function getIndex()
     {
+        $users = $this->model->all();
         
+        $this->layout('user/list', ['users' => $users]);
     }
     
     public function getMe()
@@ -44,7 +46,7 @@ class UserController extends BaseController
     
     public function getShow($name)
     {
-        $user = $this->model->getByUsername($name);
+        $user = $this->model->getByName($name);
         
         if ($user != false) {
             // article found, render

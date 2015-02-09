@@ -16,7 +16,7 @@ class CurrentUser
         $this->update();        
     }
     
-    public function update()
+    protected function update()
     {
         $this->rights = [];
         $this->categories = [];

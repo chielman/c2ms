@@ -13,8 +13,8 @@ abstract class BaseController
     
     public function __construct(Router $route)
     {
-        $this->user         =& $route->getUser();
-        $this->messenger    =& $route->getMessenger();
+        $this->user         = $route->getUser();
+        $this->messenger    = $route->getMessenger();
         $this->router       = $route;
         ;
     }
@@ -58,12 +58,6 @@ abstract class BaseController
         $content = $this->view($view, $args, true);
         return $this->view('layout', ['content' => $content, 'breadcrumbs' => $this->router->getCrumbs()], $return);
         
-    }
-    
-    protected function route($route)
-    {
-        $this->router->dispatch($route);
-        exit();
     }
     
     protected function abort()

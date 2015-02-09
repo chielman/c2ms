@@ -5,6 +5,16 @@ use PDO;
 
 class User extends BaseModel
 {
+    public function all($group = false)
+    {
+        $sql = 'SELECT * FROM users';
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
+    
     public function get($id)
     {
         $sql = 'SELECT * FROM users WHERE id = :id';

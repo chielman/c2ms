@@ -1,0 +1,18 @@
+<?php
+
+// define paths
+define('BASE_PATH', dirname(__DIR__));
+define('APP_PATH', BASE_PATH . '/app' );
+define('PUBLIC_PATH',  BASE_PATH . '/public' );
+
+// register classloader
+require(APP_PATH . '/libraries/ClassLoader.php');
+Libraries\ClassLoader::register();
+
+// start session
+session_start();
+
+// set time zones
+define('LOCAL_TIMEZONE', 'Europe/Amsterdam');
+
+include(APP_PATH . '/helpers.php');

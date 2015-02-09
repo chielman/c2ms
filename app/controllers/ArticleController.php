@@ -3,6 +3,7 @@
 namespace Controllers;
 use Libraries\Router;
 use Models\Article;
+use Models\Media;
 use Models\Comment;
 
 class ArticleController extends BaseController
@@ -39,7 +40,13 @@ class ArticleController extends BaseController
         // TODO add script to head to load the editor
         
         
-        $this->layout('article/single-article', ['title' => '', 'content' => '', 'comment' => 0]);
+        $this->layout('article/single-article', [   
+            'title' => 'naamloos', 
+            'content' => 'Lorum ipsum dolorum set amet.', 
+            'comment' => 0, 
+            'media' => '', 
+            'media_description' => ''
+       ]);
     }
     
     /**
@@ -71,7 +78,15 @@ class ArticleController extends BaseController
         $article = $this->model->get($slug);
         
         if ($article != false) {
-                        
+            
+            if (count($_FILES) > 0) {
+                
+                // upload media
+                $media = new Media();
+                $_POST['media_id'] = $media->upload('stories', $slug, $_FILES);
+                
+            }   
+                
             $this->model->update($article, $_POST);
             
         } else {
