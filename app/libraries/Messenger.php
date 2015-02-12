@@ -6,7 +6,8 @@ class Messenger
 {
     const INFO = 1;
     const WARNING = 2;
-    const ERROR = 3;
+    
+    protected $messages = [];
     
     public function info($message)
     {
@@ -18,8 +19,13 @@ class Messenger
         return $this->message(self::WARNING, $message);
     }
     
-    protected function message($level, $message)
+    public function message($level, $message)
     {
         $this->messages[] = ['level' => $level, 'message' => $message];
+    }
+    
+    public function get()
+    {
+        return $this->messages;
     }
 }

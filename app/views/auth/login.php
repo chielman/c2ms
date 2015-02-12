@@ -1,4 +1,4 @@
-<div id="background-picture" style="background-image: url('images/backgrounds/wedstrijdfoto-2013.jpg')">
+<div id="background-picture">
     <div class="center-box login">
         <form action="login" method="POST">
             <div class="input-field">

@@ -71,22 +71,13 @@ $blue: #005A9C;
     height: 100%;
     height: calc(100% - 45px);
     .center-box{
-        background-color: #fff;
-        background-color: rgba(255,255,255,.5);
-        width: 300px;
-        min-height: 100px;
-        position: absolute;
-        z-index: 1;
-        left: 50%;
-        margin-left: -200px;
-        top: 50%;
-        margin-top: -200px;
         padding: 25px;
+        max-width: 300px;
+        margin: 0 auto;
     }
     .login{
         padding-top: 220px;
-        background-image: url("../images/logo-100x85.png");
-        background: rgba(255,255,255,.7) url("../images/logo-150x125.png") no-repeat center 50px;
+        background: url("../images/logo-150x125.png") no-repeat center 50px;
         form{
             .input-field{
                 position: relative;
@@ -161,6 +152,8 @@ $blue: #005A9C;
         }
     }
 }
+
+@import "responsive";
 
 
 

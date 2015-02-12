@@ -1,0 +1,17 @@
+@media (min-width: 480px) and (min-height: 600px) {
+    #background-picture{
+        background-image: url('../images/stories/test/DSC00108.jpg');
+        .center-box{
+            background-color: #fff;
+            background-color: rgba(255,255,255,.7);
+            width: 300px;
+            min-height: 100px;
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            margin-left: -175px;
+            top: 50%;
+            margin-top: -200px;
+        }
+    }
+}

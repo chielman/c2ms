@@ -77,6 +77,8 @@ $.editor = (function(){
             var config, 
                 object = document.querySelector(selector);
 
+            if (object === null) { return false; }
+            
             object.classList.add('editor-editable');
             object.setAttribute('contentEditable', true);
 

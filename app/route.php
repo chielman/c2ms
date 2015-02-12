@@ -22,8 +22,12 @@ $router->add('events', ['Controllers\EventController', 'getIndex']);
 
 // user
 $router->add('me', ['Controllers\UserController', 'getMe']);
-$router->add('users', ['Controllers\UserController', 'getIndex']);
 $router->add('users/*', ['Controllers\UserController', 'getShow']);
+$router->add('users', ['Controllers\UserController', 'getIndex']);
+
+// usergroups
+$router->add('groups/*', ['Controllers\UsergroupController', 'getShow']);
+$router->add('groups', ['Controllers\UsergroupController', 'getIndex']);
 
 // topics
 $router->add('topics/add', ['Controllers\TopicController', 'getForm']);
