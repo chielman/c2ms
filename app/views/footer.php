@@ -1,3 +1,5 @@
+<div id="footer"></div>
+
 <script src="<?php echo BASE_URL; ?>js/framework.js"></script>
 <script src="<?php echo BASE_URL; ?>js/editor.js"></script>
 <script src="<?php echo BASE_URL; ?>js/menu.js"></script>

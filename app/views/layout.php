@@ -6,7 +6,7 @@
         <?php include(APP_PATH . '/views/header.php'); ?>
         <?php include(APP_PATH . '/views/menu.php'); ?>
         
-        <?php echo $content; ?>
+        <div id="content"><?php echo $content; ?></div>
         
         <?php include(APP_PATH . '/views/footer.php'); ?>
     </body>
