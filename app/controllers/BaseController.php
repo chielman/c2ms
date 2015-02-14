@@ -2,6 +2,7 @@
 
 namespace Controllers;
 use Libraries\Router;
+use Libraries\IoC;
 
 abstract class BaseController
 {
@@ -9,12 +10,10 @@ abstract class BaseController
     
     protected $user;
     protected $router;
-    protected $messenger;
     
     public function __construct(Router $route)
     {
-        $this->user         = $route->getUser();
-        $this->messenger    = $route->getMessenger();
+        $this->user         = IoC::resolve('current-user');
         $this->router       = $route;
         ;
     }
@@ -64,6 +63,15 @@ abstract class BaseController
     {
         http_response_code(404);
         $this->layout('exception\404');
+        exit();
+    }
+    
+    protected function unauthorized()
+    {
+        http_response_code(401);
+        
+        // redirect to loginpage
+        $this->route('login');
         exit();
     }
     

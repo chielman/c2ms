@@ -16,7 +16,12 @@ class HomeController extends BaseController
     
     public function getIndex()
     {
-        $timeline = $this->model->getItems();
+        $access = [];
+        if ($this->user->can('article.view')) { $access[] = 'article'; }
+        if ($this->user->can('event.view')) { $access[] = 'event'; }
+        if ($this->user->can('comment.view')) { $access[] = 'comment'; }
+        
+        $timeline = $this->model->getItems($access);
         $this->layout('topic/single-topic', ['title' => 'The Dutch Dragons', 'items' => $timeline]);
     }
     

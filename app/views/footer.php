@@ -1,6 +1,7 @@
 <script src="<?php echo BASE_URL; ?>js/framework.js"></script>
 <script src="<?php echo BASE_URL; ?>js/editor.js"></script>
 <script src="<?php echo BASE_URL; ?>js/menu.js"></script>
+<script src="<?php echo BASE_URL; ?>js/attendance.js"></script>
 <script>
     $.editor.setStore('<?php echo BASE_URL . CURRENT_URL; ?>/update');
     $.editor.use('title', 'article h1', 'single-line');

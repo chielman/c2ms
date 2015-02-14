@@ -1,12 +1,7 @@
 <?php
 use Libraries\Router;
-use Libraries\CurrentUser;
-use Libraries\Messenger;
 
-$currentUser    = new CurrentUser();
-$messenger      = new Messenger();
-
-$router = new Router($currentUser, $messenger);
+$router = new Router();
 
 $router->add('login', ['Controllers\AuthController', 'login']);
 $router->add('logout', ['Controllers\AuthController', 'logout']);

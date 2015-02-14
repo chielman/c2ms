@@ -74,27 +74,33 @@ class Topic extends BaseModel
         return $stmt->fetch(); 
     }
     
-    public function getItems($topic = false)
+    public function getItems(array $type, $topic = false)
     {
         $elements = [];
         
-        $articles = new Article();
-        $tItems = $articles->all($topic);
+        if (in_array('article', $type)) {
+            $articles = new Article();
+            $tItems = $articles->all($topic);
 
-        if ($tItems != false) {
-            $elements = array_merge($elements, $tItems);
+            if ($tItems != false) {
+                $elements = array_merge($elements, $tItems);
+            }
         }
         
-        $events = new Event();
-        $tItems = $events->all($topic);
-        if ($tItems != false) {
-            $elements = array_merge($elements, $tItems);
+        if (in_array('event', $type)) {
+            $events = new Event();
+            $tItems = $events->all($topic);
+            if ($tItems != false) {
+                $elements = array_merge($elements, $tItems);
+            }
         }
         
-        $comments = new Comment();
-        $tItems = $comments->all($topic);
-        if ($tItems != false) {
-            $elements = array_merge($elements, $tItems);
+        if (in_array('comment', $type)) {        
+            $comments = new Comment();
+            $tItems = $comments->all($topic);
+            if ($tItems != false) {
+                $elements = array_merge($elements, $tItems);
+            }
         }
 
         return $elements;

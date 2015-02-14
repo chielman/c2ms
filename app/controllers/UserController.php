@@ -4,6 +4,7 @@ namespace Controllers;
 use Models\User;
 use Libraries\Authentication;
 use Libraries\Router;
+use Libraries\Mail;
 
 class UserController extends BaseController
 {
@@ -30,25 +31,31 @@ class UserController extends BaseController
             
         } else {
             
-            // logged, so lets show the profile
-            $user = $this->model->get($this->user->getId() );
-            
-            if ($user != false) {
-                
-                $this->layout('user/profile', $user);
-                
-            } else {
-                
-                $this->abort();
-            }
+            $this->getShow( $this->user->getId() );
+
         }
     }
     
-    public function getShow($name)
+    public function getShow($id)
     {
-        $user = $this->model->getByName($name);
+        if (!$this->user->can('user.view')) { 
+            $this->unauthorized();
+        }
+        
+        if (is_string($id)) {
+            $user = $this->model->getByName($id);
+        } else {
+            $user = $this->model->get($id);
+        }
         
         if ($user != false) {
+            
+            $profile = $this->model->profile($user['id']);
+            
+            if ($profile != false) {
+                $user['profile'] = $profile;
+            }
+            
             // article found, render
             $this->layout('user/profile', $user);
         } else {
@@ -56,6 +63,43 @@ class UserController extends BaseController
             $this->abort();
             
         }
+    }
+    
+    public function getForgotPassword()
+    {
+        $this->layout('user/forgot');
+    }
+    
+    public function postForgetPassword()
+    {
+       $username = filter_input(INPUT_POST, 'username');
+       
+       $user = $this->model->getByName($username);
+       
+       if ($user != false) {
+           
+           // set token and date
+           
+           $message = $this->view('mail/forgot', ['token' => $token], true);
+           
+           // send the token and date
+           $mail = new Mail();
+           $mail->to($user['username']);
+           $mail->message($message);
+           $sendSuccess = $mail->send();
+           
+           // show successful send message
+           if ($sendSuccess) {
+               
+           } else {
+               
+           }
+           
+       } else {
+           
+           // username not found
+           
+       }
     }
     
     public function postRegister()

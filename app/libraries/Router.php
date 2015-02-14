@@ -1,7 +1,6 @@
 <?php
 
 namespace Libraries;
-use Libraries\CurrentUser;
 
 class Router
 {
@@ -10,25 +9,10 @@ class Router
     protected $arguments    = [];
     protected $path         = [];
     protected $level        = 0;
-    
-    protected $user;
-    protected $messenger;
-    
-    public function __construct(CurrentUser $user, Messenger $messenger)
+        
+    public function __construct()
     {
-        $this->user         = $user;
-        $this->messenger    = $messenger;
         $this->next();
-    }
-    
-    public function getUser()
-    {
-        return $this->user;
-    }
-    
-    public function getMessenger()
-    {
-        return $this->messenger;
     }
     
     public function getCrumbs()

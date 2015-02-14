@@ -17,3 +17,18 @@ session_start();
 define('LOCAL_TIMEZONE', 'Europe/Amsterdam');
 
 include(APP_PATH . '/helpers.php');
+
+use Libraries\IoC;
+use \PDO;
+
+IoC::singleton('database', function(){ 
+    $db = new PDO('mysql:host=localhost;dbname=c2ms', 'root', '', [PDO::ATTR_PERSISTENT => true]); 
+    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $db;
+});
+IoC::singleton('messenger', function(){
+    return new Libraries\Messenger();
+});
+IoC::singleton('current-user', function(){
+    return new Libraries\CurrentUser();
+});

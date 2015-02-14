@@ -19,14 +19,20 @@ class CommentController extends BaseController
         $item = $this->model->getItemBySlug($slug);
         
         if ($item != false) {
-                        
+      
             // TODO verify if this user is allowed to post commments
+            if ($this->user->can('comment.create')) {
             
-            $params['user_id'] = $this->user->getId();
-            $params['item_id'] = $item['id'];
-            $params['comment'] = $_POST['comment'];
-            
-            $this->model->post($params);
+                $params['user_id'] = $this->user->getId();
+                $params['item_id'] = $item['id'];
+                $params['comment'] = $_POST['comment'];
+
+                $this->model->post($params);
+                
+            } else {
+                
+                $this->unauthorized();
+            }
             
         } else {
             // item is not found so we can not comment on it

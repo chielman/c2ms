@@ -1,7 +1,7 @@
 <?php
 
 namespace Models;
-use Libraries\Database;
+use Libraries\IoC;
 use PDOStatement;
 
 class BaseModel
@@ -10,7 +10,7 @@ class BaseModel
     
     public function __construct()
     {
-        $this->db = Database::getInstance();
+        $this->db = IoC::resolve('database');
     }
     
     protected function bindArraySql(&$sql, $parameter, $array)

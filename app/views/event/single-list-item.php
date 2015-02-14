@@ -3,6 +3,8 @@
     <?php echo format_date('G:i', $start); ?> - <?php echo format_date('G:i', $end); ?>
 <?php endif; ?>
 <?php if ($attendance): ?>
-    <input type="radio" name="event-attend-<?php echo $i; ?>" id="event-subscribe-<?php echo $i; ?>"><label for="event-subscribe-<?php echo $i; ?>">Subscribe</label>
-    <input type="radio" name="event-attend-<?php echo $i; ?>" id="event-unsubscribe-<?php echo $i; ?>"><label for="event-unsubscribe-<?php echo $i; ?>">Unsubscribe</label>
+    <input data-attendance="<?php echo url("$cat_slug/$slug"); ?>" type="radio" name="event-attend-<?php echo $i; ?>" id="event-subscribe-<?php echo $i; ?>" value="1">
+    <label for="event-subscribe-<?php echo $i; ?>">Subscribe</label>
+    <input data-attendance="<?php echo url("$cat_slug/$slug"); ?>" type="radio" name="event-attend-<?php echo $i; ?>" id="event-unsubscribe-<?php echo $i; ?>" value="0">
+    <label for="event-unsubscribe-<?php echo $i; ?>">Unsubscribe</label>
 <?php endif; ?>

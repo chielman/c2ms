@@ -36,6 +36,9 @@ class ArticleController extends BaseController
     public function getForm()
     {
         // TODO verify the user can do this
+        if (!$this->user->can('article.create')) {
+            $this->unauthorized();
+        }
         
         // TODO add script to head to load the editor
         
@@ -79,15 +82,22 @@ class ArticleController extends BaseController
         
         if ($article != false) {
             
-            if (count($_FILES) > 0) {
+            if ($this->user->can('article.edit')) {
+            
+                if (count($_FILES) > 0) {
+
+                    // upload media
+                    $media = new Media();
+                    $_POST['media_id'] = $media->upload('stories', $slug, $_FILES);
+
+                }   
+
+                $this->model->update($article, $_POST);
                 
-                // upload media
-                $media = new Media();
-                $_POST['media_id'] = $media->upload('stories', $slug, $_FILES);
+            } else {
                 
-            }   
-                
-            $this->model->update($article, $_POST);
+                $this->unauthorized();
+            }
             
         } else {
             

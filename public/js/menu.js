@@ -1,8 +1,19 @@
-//klik op navicon - menu verschijnt eerst display:none; dan display:absolute;
+(function(){
+    var navicon = document.querySelector('.navicon'),
+    menu = document.querySelector('#menu');
 
-var navicon = document.querySelector('.navicon');
-var menu = document.querySelector('#menu');
-navicon.addEventListener('click', function(e){
-    menu.classList.toggle("hidden");
-});
-menu.classList.add("hidden");
+    // add navigation icon functionality
+    navicon.addEventListener('click', function(e){
+        menu.classList.toggle("hidden");
+    });
+    
+    // if the menu is open and clicked outside of the menu, close the menu
+    document.addEventListener('click', function(e){
+        if (!menu.classList.contains('hidden') && !$.ancestor(e.target, '#menu, .navicon')) {
+            menu.classList.add('hidden');
+        }
+    });
+    
+    // hide the menu
+    menu.classList.add("hidden");
+})();

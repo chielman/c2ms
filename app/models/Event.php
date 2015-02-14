@@ -138,7 +138,9 @@ class Event extends BaseModel
     
     public function attend($event_id, $user_id, $status)
     {
-        $sql = 'INSERT INTO attendances (event_id, user_id, status) VALUES (:event_id, :user_id, :status) ON DUPLICATE KEY UPDATE status = :status';
+        $sql = 'INSERT INTO attendances (event_id, user_id, status) 
+                VALUES (:event_id, :user_id, :status) 
+                ON DUPLICATE KEY UPDATE status = :status';
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);

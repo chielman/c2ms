@@ -5,6 +5,7 @@ use Models\User;
 
 class CurrentUser
 {
+    const GUEST_ID = 0;
     
     protected $rights = [];
     protected $categories = [];
@@ -28,10 +29,10 @@ class CurrentUser
     
     public function getId()
     {
-        $user_id = 0;
+        $user_id = self::GUEST_ID;
         
         if (isset($_SESSION['uid'])) {
-            $user_id = $_SESSION['uid'];
+            $user_id = (int) $_SESSION['uid'];
         }
         
         return $user_id;
@@ -39,13 +40,17 @@ class CurrentUser
     
     public function isGuest()
     {
-        return $this->getId() == 0;
+        return $this->getId() == self::GUEST_ID;
     }
     
     protected function register($user_id)
     {
         $model  = new User();
-        $rights = $model->getRights($user_id);
+        if ($this->isGuest()) {
+            $rights = $model->getRightsByGroup(self::GUEST_ID);
+        } else {
+            $rights = $model->getRights($user_id);
+        }
         
         // flatten rights
         $this->rights = $this->flattenRights($rights);
@@ -54,7 +59,7 @@ class CurrentUser
         $viewRights = [];
         foreach ($rights as $right) {
             if (strpos($right['permission'], '.view')) {
-                $viewRights[] = $rights['topic_id'];
+                $viewRights[] = $rights['category_id'];
             }
         }
         $this->categories = $viewRights;

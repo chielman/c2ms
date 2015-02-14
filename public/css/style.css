@@ -48,7 +48,8 @@ a {
   width: 250px;
   max-width: 250px;
   border-right: 1px solid #222;
-  transition: max-width 500ms ease; }
+  transition: max-width 500ms ease;
+  z-index: 10; }
   #menu ul li {
     background-color: #2f2f2f;
     border-bottom: 1px solid #555;

@@ -13,7 +13,21 @@
     </div>
     
     <?php if($attendance && $this->user->can('event.attend')): ?>
-        <?php $this->view('attendance/list-attendances', ['attendances' => $attendances]); ?>
+        <section itemprop="attendees">
+            <h3>Attendance</h3>
+            <ul>
+            <?php foreach($attendances as $attendance): ?>
+                <li><?php echo $attendance['name'];?></li>
+            <?php endforeach; ?>
+            </ul>
+
+            <label for="subscribe">Subscribe</label>
+            <input data-attendance="<?php echo url("$cat_slug/$slug"); ?>" type="radio" id="subscribe" name="attend" value="1"/>
+
+            <label for="unsubscibe">Unsubscribe</label>
+            <input data-attendance="<?php echo url("$cat_slug/$slug"); ?>" type="radio" id="unsubscribe" name="attend" value="0"/>
+
+        </section>
     <?php endif;?>
     
     <?php if($comment && $this->user->can('event.comment')): ?>

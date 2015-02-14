@@ -61,7 +61,7 @@ class TopicController extends BaseController
 
         if ($category != false) {
             // get items with this topic
-            $items = $this->model->getItems($category['id']);
+            $items = $this->model->getItems(['article', 'event', 'comment'], $category['id']);
 
             array_walk($items, [$this, 'parseItems'], $category['slug'] );
             
