@@ -1,10 +1,11 @@
-<article itemscope itemtype="http://schema.org/Article">
+<article  id="article-single" itemscope itemtype="http://schema.org/Article">
     <header>
         <img src="<?php echo image($media, 640, 480); ?>" alt="<?php echo $media_description; ?>"/>
+        <?php include(APP_PATH . '/views/share.php'); ?>
         <h1 itemprop="name"><?php echo $title; ?></h1>
     </header>
     
-    <div itemprop="articleBody">
+    <div class="content" itemprop="articleBody">
         <?php echo $content; ?>
     </div>
     

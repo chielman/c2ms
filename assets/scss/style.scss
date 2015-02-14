@@ -154,6 +154,55 @@ $blue: #005A9C;
     }
 }
 
+#article-single{
+    //padding-top: 1em;
+    header{
+        img{
+            width: 100%;
+            max-width: 640px; //voor groter
+            margin-bottom: .5em;
+        }
+        h1{
+            font-size: 150%;
+            line-height: 140%;
+            padding: .5em 20px;
+        }
+    }
+    .content{
+        padding: 0 20px;
+        p{
+            padding-bottom: 20px;
+            line-height: 160%;
+        }
+    }
+}
+
+.share{
+    padding: .5em 20px;
+    a{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        border-radius: 4px;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    .facebook{
+        background: #3a5795 url("../images/facebook.png") no-repeat center center;
+    }
+    .twitter{
+        background: #55acee url("../images/twitter.png") no-repeat center center;
+    }
+    .google{
+        background: #d73d32 url("../images/google.png") no-repeat center center;
+    }
+    .linkedin{
+        background: #1e79b1 url("../images/linkedin.png") no-repeat center center;
+    }
+}
+
 @import "responsive";
 
 

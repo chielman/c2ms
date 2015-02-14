@@ -131,9 +131,42 @@ a {
       text-align: center;
       display: block; }
 
+#article-single header img {
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: .5em; }
+#article-single header h1 {
+  font-size: 150%;
+  line-height: 140%;
+  padding: .5em 20px; }
+#article-single .content {
+  padding: 0 20px; }
+  #article-single .content p {
+    padding-bottom: 20px;
+    line-height: 160%; }
+
+.share {
+  padding: .5em 20px; }
+  .share a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 4px; }
+    .share a:last-child {
+      margin-right: 0; }
+  .share .facebook {
+    background: #3a5795 url("../images/facebook.png") no-repeat center center; }
+  .share .twitter {
+    background: #55acee url("../images/twitter.png") no-repeat center center; }
+  .share .google {
+    background: #d73d32 url("../images/google.png") no-repeat center center; }
+  .share .linkedin {
+    background: #1e79b1 url("../images/linkedin.png") no-repeat center center; }
+
 @media (min-width: 480px) and (min-height: 600px) {
   #background-picture {
-    background-image: url("../images/stories/test/DSC00108.jpg"); }
+    background-image: url("../images/backgrounds/wedstrijdfoto-2013.jpg"); }
     #background-picture .center-box {
       background-color: #fff;
       background-color: rgba(255, 255, 255, 0.7);
@@ -145,5 +178,3 @@ a {
       margin-left: -175px;
       top: 50%;
       margin-top: -200px; } }
-
-/*# sourceMappingURL=style.css.map */
