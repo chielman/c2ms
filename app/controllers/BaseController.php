@@ -7,6 +7,8 @@ use Libraries\IoC;
 abstract class BaseController
 {
     protected $arguments;
+    protected $meta = [];
+    protected $title = '';
     
     protected $user;
     protected $router;
@@ -55,8 +57,25 @@ abstract class BaseController
     protected function layout($view, $args = [], $return = false)
     {
         $content = $this->view($view, $args, true);
-        return $this->view('layout', ['content' => $content, 'breadcrumbs' => $this->router->getCrumbs()], $return);
+        return $this->view('layout', [
+            'content' => $content, 
+            'breadcrumbs' => $this->router->getCrumbs(),
+            'meta' => $this->meta,
+            'title' => $this->title,
+            'description' => $this->description,
+            'keywords' => $this->keywords
+        ], $return);
         
+    }
+    
+    protected function addMeta($name, $content)
+    {
+        $this->meta[$name] = $content;
+    }
+    
+    protected function setTitle($title)
+    {
+        $this->title = $title;
     }
     
     protected function abort()
@@ -71,7 +90,7 @@ abstract class BaseController
         http_response_code(401);
         
         // redirect to loginpage
-        $this->route('login');
+        $this->router->dispatch('login');
         exit();
     }
     

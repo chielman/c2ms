@@ -8,7 +8,6 @@ class CurrentUser
     const GUEST_ID = 0;
     
     protected $rights = [];
-    protected $categories = [];
     
     protected static $self;
     
@@ -19,11 +18,8 @@ class CurrentUser
     
     protected function update()
     {
-        $this->rights = [];
-        $this->categories = [];
-        
-        $user_id = $this->getId();
-        
+        $this->rights   = [];
+        $user_id        = $this->getId();
         $this->register($user_id);
     }
     
@@ -46,59 +42,45 @@ class CurrentUser
     protected function register($user_id)
     {
         $model  = new User();
+        
         if ($this->isGuest()) {
             $rights = $model->getRightsByGroup(self::GUEST_ID);
         } else {
             $rights = $model->getRights($user_id);
         }
         
-        // flatten rights
-        $this->rights = $this->flattenRights($rights);
-        
-        // find all the view rights
-        $viewRights = [];
+        // format rights for fast access
+        $formatRights = [];
         foreach ($rights as $right) {
-            if (strpos($right['permission'], '.view')) {
-                $viewRights[] = $rights['category_id'];
-            }
-        }
-        $this->categories = $viewRights;
-    }
-    
-    protected function flattenRights($rights)
-    {
-        $result = [];
-        
-        foreach ($rights as $right) {
-            if ( isset($right['category_id']) ) {
-                $result[] = $right['category_id'] . '.' . $right['permission'];
-            } else {
-                $result[] = $right['permission'];
-            }
+            $formatRights[$right['permission']][] = $right['category_id'];
         }
         
-        $result = array_unique($result);
-        
-        return $result;
+        $this->rights = $formatRights;
     }
     
-    public function can($action, $category_id = false)
+    public function can($action, $category_id = null)
     {   
-        $result = false;
+        if (isset($this->rights[$action])) {
+            
+            if (in_array(null, $this->rights[$action])) { return true; }
+            
+            return in_array($category_id, $this->rights[$action]);
+            
+        }
         
-        // check for category level permission
-        if ($category_id) {
-            $result = in_array($category_id . '.' . $action, $this->rights);
-        }
-        // no category level permission found, so we use global
-        if ($result === false && !is_null($this->rights)) {
-            $result = in_array($action, $this->rights);
-        }
-        return $result;
+        return false;
     }
     
-    public function categories()
+    public function rights($action = null)
     {
-        return $this->categories;
+        if (is_null($action)) {
+            return $this->rights;
+        } else {
+            if (isset($this->rights[$action])) {
+                return $this->rights[$action];
+            } else {
+                return [];
+            }
+        }
     }
 }

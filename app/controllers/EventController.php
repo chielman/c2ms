@@ -17,11 +17,24 @@ class EventController extends BaseController
     
     public function getIndex()
     {
-        $events = $this->model->all();
+        $topics = $this->user->rights('event.view');
+        if (in_array(null, $topics)) { 
+            $topics = null;
+        }
+        
+        $events = $this->model->all( $topics );
                 
-        if ($events != false) {
+        if ($events !== false) {
             
-            $this->layout('topic/single-topic', ['title' => 'Events', 'items' => $events]);
+            if (count($events) > 0) {
+                $this->layout('topic/single-topic', ['title' => 'Events', 'items' => $events]);
+            } else {
+                // prevent being indexed
+                header('X-Robots-Tag: noindex');
+                $this->addMeta('robots', 'noindex');
+                $this->layout('topic/empty-topic', ['title' => 'Events']);
+            }
+            
         } else {
             // events are not found
             $this->abort();
@@ -32,6 +45,10 @@ class EventController extends BaseController
     {        
         $event = $this->model->get($slug);
 
+        if (!$this->user->can('event.view', $event['cat_id'])) {
+            $this->unauthorized();
+        }
+        
         if ($event != false) {
             
             if ($this->user->can('event.attend') && $event['attendance']) {
@@ -42,6 +59,10 @@ class EventController extends BaseController
                 $commentModel = new Comment;
                 $event['comments'] = $commentModel->getFor($event['id']);
             }
+            
+            $this->setTitle($event['title']);
+            //$this->addMeta('keywords', '');
+            //$this->addMeta('description', '');
             
             $this->layout('event/single-event', $event);
         } else {
@@ -56,6 +77,10 @@ class EventController extends BaseController
         
         if ($event != false) {
             
+            if (!$this->user->can('event.edit')) {
+                $this->unauthorized();
+            }
+            
             $this->model->update($event, $_POST);
 
         } else {
@@ -69,6 +94,10 @@ class EventController extends BaseController
         $event = $this->model->get($slug);
         
         if ($event != false) {
+            
+            if (!$this->user->can('event.attend')) {
+                $this->unauthorized();
+            }
             
             $status = filter_input(INPUT_POST, 'status');
             

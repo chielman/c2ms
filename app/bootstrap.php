@@ -26,8 +26,8 @@ IoC::singleton('database', function(){
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $db;
 });
-IoC::singleton('messenger', function(){
-    return new Libraries\Messenger();
+IoC::singleton('notify', function(){
+    return new Libraries\Notify();
 });
 IoC::singleton('current-user', function(){
     return new Libraries\CurrentUser();

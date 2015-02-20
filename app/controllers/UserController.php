@@ -17,7 +17,7 @@ class UserController extends BaseController
     }
     
     public function getIndex()
-    {
+    { 
         $users = $this->model->all();
         
         $this->layout('user/list', ['users' => $users]);
@@ -37,17 +37,13 @@ class UserController extends BaseController
     }
     
     public function getShow($id)
-    {
-        if (!$this->user->can('user.view')) { 
-            $this->unauthorized();
-        }
-        
+    {        
         if (is_string($id)) {
             $user = $this->model->getByName($id);
         } else {
             $user = $this->model->get($id);
         }
-        
+               
         if ($user != false) {
             
             $profile = $this->model->profile($user['id']);

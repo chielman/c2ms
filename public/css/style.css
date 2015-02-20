@@ -53,11 +53,12 @@ a {
   #menu ul li {
     background-color: #2f2f2f;
     border-bottom: 1px solid #555;
-    padding: .75em;
     border-top: 1px solid #3a3a3a;
     border-bottom: 1px solid #292929;
     overflow: hidden; }
     #menu ul li a {
+      display: block;
+      padding: .75em;
       color: #e6e6e6; }
     #menu ul li:hover {
       background-color: #353535; }

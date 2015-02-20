@@ -74,33 +74,59 @@ class Topic extends BaseModel
         return $stmt->fetch(); 
     }
     
-    public function getItems(array $type, $topic = false)
+    protected function access($rule, array $rules = [], array $topics = null)
+    {
+        // check if rule exists
+        if (isset($rules[$rule])) {
+            
+            // everything is allowed
+            if (in_array(null, $rules[$rule])) { return null; }
+            
+            // if rule exists see if we can access this topic
+            if (!is_null($topics)) {
+                
+                $allowed = array_intersect($topics, $rules[$rule]);
+                
+                return $allowed;
+                
+            } else {
+                
+                $allowed = $rules[$rule];
+                
+                if(($key = array_search(null, $allowed)) !== false) {
+                    unset($allowed[$key]);
+                }
+                
+                return $allowed;
+                
+            }
+            
+        }
+        
+        return [];
+    }
+    
+    public function getItems(array $rules = [], array $topic = null)
     {
         $elements = [];
         
-        if (in_array('article', $type)) {
-            $articles = new Article();
-            $tItems = $articles->all($topic);
+        $articles = new Article();
+        $tItems = $articles->all(  $this->access('article.view', $rules, $topic) );
 
-            if ($tItems != false) {
-                $elements = array_merge($elements, $tItems);
-            }
+        if ($tItems != false) {
+            $elements = array_merge($elements, $tItems);
         }
-        
-        if (in_array('event', $type)) {
-            $events = new Event();
-            $tItems = $events->all($topic);
-            if ($tItems != false) {
-                $elements = array_merge($elements, $tItems);
-            }
+
+        $events = new Event();
+        $tItems = $events->all( $this->access('event.view', $rules, $topic) );
+        if ($tItems != false) {
+            $elements = array_merge($elements, $tItems);
         }
-        
-        if (in_array('comment', $type)) {        
-            $comments = new Comment();
-            $tItems = $comments->all($topic);
-            if ($tItems != false) {
-                $elements = array_merge($elements, $tItems);
-            }
+
+        $comments = new Comment();
+        $tItems = $comments->all( $this->access('comment.view', $rules, $topic) );
+        if ($tItems != false) {
+            $elements = array_merge($elements, $tItems);
         }
 
         return $elements;

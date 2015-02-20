@@ -1,4 +1,6 @@
-<?php // http://themergency.com/social-network-links/ ?>
+<?php // http://themergency.com/social-network-links/ 
+$url = url("$cat_slug/$slug");
+?>
 
 <div class="share">
     <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($url); ?>" rel="nofollow" target="_blank" alt="Share on Facebook"></a>

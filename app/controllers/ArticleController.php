@@ -20,8 +20,13 @@ class ArticleController extends BaseController
      * Display all articles
      */
     public function getIndex()
-    {        
-        $articles   = $this->model->all($this->user->categories());
+    {
+        $topics = $this->user->rights('article.view');
+        if (in_array(null, $topics)) { 
+            $topics = null;
+        }
+        
+        $articles   = $this->model->all($topics);
 
         if ($articles != false) {
             
@@ -61,12 +66,20 @@ class ArticleController extends BaseController
     {              
         $article = $this->model->get($slug);
         
+        if (!$this->user->can('article.view', $article['cat_id'])) {
+            $this->unauthorized();
+        }
+        
         if ($article != false ) {
             
             if ($this->user->can('article.comment') && $article['comment']) {
                 $commentModel = new Comment;
                 $article['comments'] = $commentModel->getFor($article['id']);
             }
+            
+            $this->setTitle($article['title']);
+            //$this->addMeta('description', '');
+            //$this->addMeta('keywords', '');
             
             // article found, render
             $this->layout('article/single-article', $article);

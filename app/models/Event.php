@@ -7,7 +7,7 @@ use Validators\EventValidator;
 class Event extends BaseModel
 {
     
-    public function all($topic = false)
+    public function all(array $topics = null)
     {
         $sql = 'SELECT  i.id,
                         i.slug,
@@ -20,6 +20,7 @@ class Event extends BaseModel
                         e.attendance,
                         e.attend_end,
                         e.comment,
+                        c.id AS cat_id,
                         c.slug AS cat_slug,
                         c.title AS category,
                         "event" AS _type
@@ -28,15 +29,16 @@ class Event extends BaseModel
                 JOIN item_topics AS itc ON itc.item_id = i.id
                 JOIN topics AS c ON c.id = itc.topic_id AND c.category = 1';
         
-        if ($topic !== false) {
-            $sql .= ' JOIN item_topics AS it ON it.item_id = i.id WHERE it.topic_id = :topic_id';
+        if (!is_null($topics)) {
+            $sql .= ' JOIN item_topics AS it ON it.item_id = i.id WHERE it.topic_id IN (:topic_id)';
+            $this->bindArraySql($sql, ':topic_id', $topics);
         }
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':model', get_class(), PDO::PARAM_STR);      
         
-        if ($topic !== false) {
-            $stmt->bindValue(':topic_id', $topic, PDO::PARAM_INT);
+        if (!is_null($topics)) {
+            $this->bindArray($stmt, ':topic_id', $topics, PDO::PARAM_INT);
         }
         $stmt->execute();
         
@@ -55,6 +57,7 @@ class Event extends BaseModel
                         e.attendance,
                         e.attend_end,
                         e.comment,
+                        c.id AS cat_id,
                         c.slug AS cat_slug,
                         c.title AS category,
                         "event" AS _type

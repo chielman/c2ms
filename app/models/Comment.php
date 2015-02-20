@@ -5,7 +5,7 @@ use PDO;
 
 class Comment extends BaseModel
 {
-    public function all($topic = false)
+    public function all(array $topics = null)
     {        
         $sql = 'SELECT  i.id,
                         i.slug, 
@@ -19,15 +19,16 @@ class Comment extends BaseModel
                 JOIN items AS i ON i.id = c.item_id
                 JOIN users AS u ON u.id = c.user_id';
         
-        if ($topic !== false) {
+        if (!is_null($topics)) {
             $sql .= ' JOIN item_topics AS it ON it.item_id = i.id
-                      WHERE it.topic_id = :topic_id';
+                      WHERE it.topic_id IN (:topic_id)';
+            $this->bindArraySql($sql, ':topic_id', $topics);
         }
         
         $stmt = $this->db->prepare($sql);
         
-        if ($topic !== false) {
-            $stmt->bindValue(':topic_id', $topic, PDO::PARAM_INT);
+        if (!is_null($topics)) {
+            $this->bindArray($stmt, ':topic_id', $topics, PDO::PARAM_INT);
         }
         
         $stmt->execute();

@@ -3,11 +3,11 @@
         <form action="login" method="POST">
             <div class="input-field">
                 <label for="username"></label>
-                <input placeholder="Emailadres" type="text" id="username" name="username" maxlength="50" />
+                <input placeholder="Emailadres" type="text" id="username" name="username" maxlength="50" required />
             </div>
             <div class="input-field">
                 <label for="password"></label>
-                <input placeholder="Wachtwoord" type="password" id="password" name="password" maxlength="50" />
+                <input placeholder="Wachtwoord" type="password" id="password" name="password" maxlength="50" required />
             </div>
             <!--<div class="remember-me">
                 <input type="checkbox" name="form[remember]" /> Remember me

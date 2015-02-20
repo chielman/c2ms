@@ -48,11 +48,12 @@ $blue: #005A9C;
         li{
             background-color: #2f2f2f;
             border-bottom: 1px solid #555;
-            padding: .75em;
             border-top: 1px solid #3a3a3a;
             border-bottom: 1px solid #292929;
             overflow: hidden;
             a{
+                display:block;
+                padding: .75em;
                 color: #e6e6e6;
             }
             &:hover{

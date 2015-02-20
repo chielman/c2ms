@@ -1,4 +1,8 @@
-<div id="footer"></div>
+<div id="footer">
+    <!-- contact, adverteren, over thedutchdragons.nl, privacy, algemene voorwaarden, cookies -->
+    <!-- like op facebook, volg op twitter, instagram -->
+    <!-- copyright -->
+</div>
 
 <script src="<?php echo BASE_URL; ?>js/framework.js"></script>
 <script src="<?php echo BASE_URL; ?>js/editor.js"></script>

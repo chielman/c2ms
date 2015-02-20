@@ -41,7 +41,7 @@ class TopicController extends BaseController
      */
     public function getIndex()
     {
-         $topics = $this->model->all();
+         $topics = $this->model->all( $this->user->rights() );
          
          if ($topics != false) {
              $this->layout('topic/list-topic', ['topics' => $topics]);
@@ -60,8 +60,9 @@ class TopicController extends BaseController
         $category = $this->model->getBySlug($slug);
 
         if ($category != false) {
+            
             // get items with this topic
-            $items = $this->model->getItems(['article', 'event', 'comment'], $category['id']);
+            $items = $this->model->getItems( $this->user->rights(), [$category['id']] );
 
             array_walk($items, [$this, 'parseItems'], $category['slug'] );
             
