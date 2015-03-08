@@ -185,6 +185,52 @@ $blue: #005A9C;
     }
 }
 
+/* BY ERWIN */
+.user{
+    max-width: 840px;
+    margin:60px auto 20px auto;
+    overflow: hidden;
+    img {
+        float:left;
+        border-radius: 100%;
+    }
+}
+.report{
+    max-width: 840px;
+    margin:0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    border-left: 1px solid #F8F8F8;
+    border-right: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    
+    & > div{
+        flex: 1;
+        padding: 10px;
+        border-right: 1px solid #EEE;
+    }
+    & > div:last-child{
+        border-right: 0;
+    }
+    .day {
+        flex: initial;
+        width: 100%;
+        font-size: 12px;
+        background-color: #F8F8F8;
+        color:#AAA;
+        border-right: 0;
+    }
+    .property{
+        font-weight: bold;
+        padding: 5px 10px;
+    }
+    .value{
+        padding: 10px 10px;
+    }
+}
+
 .share{
     padding: .5em 20px;
     margin: 0 auto;

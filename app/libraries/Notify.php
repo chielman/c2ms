@@ -13,7 +13,7 @@ class Notify
     {
         // add messages from query-string if any
         if (isset($_GET['message'])) {
-            $this->messages = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
+            $this->messages[] = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
         }
     }
     

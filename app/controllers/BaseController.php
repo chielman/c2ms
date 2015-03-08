@@ -8,16 +8,18 @@ abstract class BaseController
 {
     protected $arguments;
     protected $meta = [];
+    protected $scripts = [];
     protected $title = '';
     
     protected $user;
     protected $router;
+    protected $notify;
     
     public function __construct(Router $route)
     {
         $this->user         = IoC::resolve('current-user');
+        $this->notify       = IoC::resolve('notify');
         $this->router       = $route;
-        ;
     }
     /**
      * Load view with optional arguments
@@ -60,6 +62,7 @@ abstract class BaseController
         return $this->view('layout', [
             'content' => $content, 
             'breadcrumbs' => $this->router->getCrumbs(),
+            'notify' => $this->notify->get(),
             'meta' => $this->meta,
             'title' => $this->title,
             'description' => $this->description,
@@ -71,6 +74,17 @@ abstract class BaseController
     protected function addMeta($name, $content)
     {
         $this->meta[$name] = $content;
+    }
+    
+    protected function addScript($scripts)
+    {
+        if (is_array($scripts)) {
+            foreach($scripts as $script) {
+                $this->addScript($script);
+            }
+        } else {
+            $this->scripts[] = $scripts;
+        }
     }
     
     protected function setTitle($title)

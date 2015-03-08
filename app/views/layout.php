@@ -5,6 +5,7 @@
     <body itemscope itemtype="http://schema.org/WebPage">
         <?php include(APP_PATH . '/views/header.php'); ?>
         <?php include(APP_PATH . '/views/menu.php'); ?>
+        <?php include(APP_PATH . '/views/notify.php'); ?>
         
         <div id="content"><?php echo $content; ?></div>
         

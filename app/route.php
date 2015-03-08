@@ -16,7 +16,14 @@ $router->add('events/*', ['Controllers\EventController', 'getShow']);
 $router->add('events', ['Controllers\EventController', 'getIndex']);
 
 // user
+$router->add('me/report', ['Controllers\UserProgressController', 'getShow']);
 $router->add('me', ['Controllers\UserController', 'getMe']);
+
+$router->add('users/report/add', ['Controllers\UserPorgressController', 'getForm']);
+$router->add('users/report', ['Controllers\UserProgressController', 'getIndex']);
+
+$router->add('users/*/report/add', ['Controllers\UserProgressController', 'getForm']);
+$router->add('users/*/report', ['Controllers\UserProgressController', 'getShow']);
 $router->add('users/*', ['Controllers\UserController', 'getShow']);
 $router->add('users', ['Controllers\UserController', 'getIndex']);
 

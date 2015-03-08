@@ -10,7 +10,7 @@ $query  = parse_url($url);
 $path   = isset($query['path']) ? $query['path'] : '';
 
 if (isset($query['query'])) {
-    $_GET = parse_str( $query['query'] );
+    parse_str( $query['query'] , $_GET);
 }
 
 define('CURRENT_URL', $path );

@@ -37,7 +37,12 @@ var $ = (function(){
                 }
             }
             return false;
-        }
+        },
+        
+        matchSelector : function(object, selector) {
+            var objects = document.querySelectorAll(selector);
+            return [].indexOf.call(objects, object) !== -1;
+        },
     }
     
 })();

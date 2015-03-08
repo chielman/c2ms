@@ -80,6 +80,7 @@ class ArticleController extends BaseController
             $this->setTitle($article['title']);
             //$this->addMeta('description', '');
             //$this->addMeta('keywords', '');
+            $this->addScript(['editor.js', 'article-editor.js']);
             
             // article found, render
             $this->layout('article/single-article', $article);
@@ -103,7 +104,10 @@ class ArticleController extends BaseController
                     $media = new Media();
                     $_POST['media_id'] = $media->upload('stories', $slug, $_FILES);
 
-                }   
+                }
+                
+                $analyse = new \Libraries\Seo\Analyse();
+                $analyse->run($_POST['content']);
 
                 $this->model->update($article, $_POST);
                 
